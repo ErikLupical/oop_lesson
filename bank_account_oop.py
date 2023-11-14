@@ -14,19 +14,35 @@ class AccountDB:
             if self.account_database[i].account_number == account_num:
                 return i
         return -1
-    
+
     def search_public(self, account_num):
         for account in self.account_database:
             if account.account_number == account_num:
                 return account
         return None
-    
+
+    def delete(self, account_num):
+        """
+        Deletes account with account_number
+        acc_db = AccountDB()
+        acc_db.insert(Account("123", "John Doe"))
+        acc_db.insert(Account("456", "Jane Smith"))
+        acc_db.delete("123")
+        """
+        index = self.__search_private(account_num)
+        if index != -1:
+            del self.account_database[index]
+            print("Account with account number", account_num, "deleted.")
+        else:
+            print("Account with account number", account_num, "not found; cannot be deleted.")
+
     def __str__(self):
         s = ''
         for account in self.account_database:
             s += str(account) + ", "
         return s
-        
+
+
 class Account:
     def __init__(self, num, type, account_name, balance):
         self.account_number = num
@@ -60,6 +76,4 @@ print(my_account_DB)
 my_account_DB.search_public("0003").deposit(50)
 print(my_account_DB)
 my_account_DB.search_public("0003").withdraw(100)
-print(my_account_DB)
-my_account_DB.search_public("0010").deposit(50)
 print(my_account_DB)
